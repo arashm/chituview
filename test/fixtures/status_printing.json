@@ -1,0 +1,17 @@
+{
+  "Status": {
+    "CurrentStatus": [1],
+    "PrintInfo": {
+      "Status": 2,
+      "CurrentLayer": 1514,
+      "TotalLayer": 1697,
+      "CurrentTicks": 16852229,
+      "TotalTicks": 18818950,
+      "ErrorNumber": 0,
+      "Filename": "bison - rays.ctb",
+      "TaskId": "9baff5e4-85bb-11f1-b349-448763efe710"
+    }
+  },
+  "MainboardID": "82e29f99d60e0100",
+  "Topic": "sdcp/status/82e29f99d60e0100"
+}
