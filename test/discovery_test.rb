@@ -1,4 +1,5 @@
 require "test_helper"
+require "timeout"
 
 class DiscoveryTest < Minitest::Test
   REPLY = <<~JSON
@@ -49,5 +50,54 @@ class DiscoveryTest < Minitest::Test
     assert_equal 1, printers.size
     assert_equal "82e29f99d60e0100", printers.first.mainboard_id
     assert_equal ["M99999"], sock.sent
+  end
+
+  # Answers only after a couple of quiet receives, like a printer that is slow
+  # to get around to replying.
+  class SlowSocket
+    def initialize(reply, from_ip, quiet_receives)
+      @reply = reply
+      @from_ip = from_ip
+      @quiet = quiet_receives
+      @served = false
+    end
+    def setsockopt(*) = nil
+    def send(*) = nil
+    def recvfrom(_len)
+      raise IO::TimeoutError if @served
+      (@quiet -= 1) >= 0 and raise IO::TimeoutError
+
+      @served = true
+      [@reply, ["AF_INET", 3000, @from_ip, @from_ip]]
+    end
+    def close = nil
+  end
+
+  def test_collect_keeps_listening_through_quiet_stretches
+    sock = SlowSocket.new(REPLY, "192.168.50.133", 2)
+    printers = Chituview::Discovery.discover(timeout: 0.5, socket: sock)
+    assert_equal 1, printers.size, "gave up at the first silent receive"
+  end
+
+  def test_probe_returns_as_soon_as_a_printer_answers
+    sock = FakeSocket.new(REPLY, "192.168.50.133")
+    started = Chituview::Discovery.now
+    info = Chituview::Discovery.probe("192.168.50.133", timeout: 30, socket: sock)
+    assert_equal "82e29f99d60e0100", info.mainboard_id
+    assert_operator Chituview::Discovery.now - started, :<, 5, "waited out the full window"
+  end
+
+  # FakeSocket only *mimics* a receive timeout; this exercises a real socket to
+  # prove build_socket actually gives us one. Nothing ever answers on this port,
+  # so collect must come back empty rather than block forever.
+  def test_real_socket_collect_returns_when_nothing_replies
+    sock = Chituview::Discovery.build_socket(broadcast: false)
+    sock.bind("127.0.0.1", 0)
+    started = Chituview::Discovery.now
+    found = Timeout.timeout(10) { Chituview::Discovery.collect(sock, 0.5) }
+    assert_empty found
+    assert_operator Chituview::Discovery.now - started, :<, 5
+  ensure
+    sock&.close
   end
 end

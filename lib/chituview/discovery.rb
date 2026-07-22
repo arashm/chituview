@@ -38,7 +38,7 @@ module Chituview
     def probe(ip, timeout: 2, socket: nil)
       sock = socket || build_socket(broadcast: false)
       sock.send(PROBE, 0, ip, PORT)
-      collect(sock, timeout).first
+      collect(sock, timeout, stop_on_first: true).first
     ensure
       sock.close if socket.nil? && sock
     end
@@ -46,29 +46,37 @@ module Chituview
     # Real sockets get a receive timeout so recvfrom can't block forever; the
     # loop below then relies on recvfrom raising IO::TimeoutError to stop. The
     # test's FakeSocket mimics this by raising IO::TimeoutError after one reply.
+    #
+    # This must be IO#timeout, not SO_RCVTIMEO: Ruby waits for readability with
+    # its own scheduler before calling recvfrom(2), so the socket option never
+    # gets a chance to fire and recvfrom blocks forever.
     def build_socket(broadcast:)
       sock = UDPSocket.new
       sock.setsockopt(Socket::SOL_SOCKET, Socket::SO_BROADCAST, true) if broadcast
-      timeval = [0, 300_000].pack("l_2") # 0.3s
-      sock.setsockopt(Socket::SOL_SOCKET, Socket::SO_RCVTIMEO, timeval)
+      sock.timeout = 0.3
       sock
     end
 
-    def collect(sock, timeout)
+    # Listens for the whole timeout window so printers that are slow to answer
+    # still get counted. Each receive only waits build_socket's 0.3s, so a quiet
+    # stretch means "nothing yet", not "nobody is out there" — keep going until
+    # the deadline. Probing a known IP passes stop_on_first to return the moment
+    # that one printer answers instead of waiting out the window.
+    def collect(sock, timeout, stop_on_first: false)
       deadline = now + timeout
       found = {}
-      loop do
-        break if now >= deadline
-
-        data, addr = begin
-          sock.recvfrom(8192)
+      while now < deadline
+        begin
+          data, addr = sock.recvfrom(8192)
         rescue IO::TimeoutError, Errno::EAGAIN
-          nil
+          next
         end
-        break if data.nil?
 
         info = parse_reply(data, addr[3])
-        found[info.mainboard_id] = info if info
+        next unless info
+
+        found[info.mainboard_id] = info
+        break if stop_on_first
       end
       found.values
     end
