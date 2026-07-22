@@ -99,7 +99,7 @@ module Chituview
 
           begin
             feed(@socket.readpartial(8192))
-          rescue *READ_ERRORS
+          rescue StandardError
             break if @closing
 
             @inbox << { type: :closed, payload: {} }
@@ -122,7 +122,7 @@ module Chituview
           establish
           request(Protocol::CMD_STATUS)
           return true
-        rescue *READ_ERRORS, Error
+        rescue StandardError
           attempt += 1
         end
       end
