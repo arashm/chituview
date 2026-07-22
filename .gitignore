@@ -3,3 +3,5 @@
 *.gem
 .bundle/
 vendor/bundle
+/.ruby-lsp
+/docs

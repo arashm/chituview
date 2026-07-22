@@ -33,11 +33,6 @@ Camera requires one of `mpv`, `ffplay`, or `vlc` on your PATH.
 Read-only by design: it never pauses, resumes, stops, or deletes prints or files.
 It only queries status/attributes and toggles the camera.
 
-## How it works
-
-See `docs/superpowers/specs/2026-07-22-chituview-dashboard-design.md` for the SDCP
-protocol details it relies on.
-
 ## License
 
 MIT
