@@ -4,6 +4,7 @@ require_relative "chituview/printer_state"
 require_relative "chituview/discovery"
 require_relative "chituview/client"
 require_relative "chituview/camera"
+require_relative "chituview/dashboard"
 
 module Chituview
   class Error < StandardError; end
