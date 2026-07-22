@@ -11,10 +11,13 @@ class DashboardTest < Minitest::Test
   end
 
   class FakeCamera
-    attr_reader :opened, :disabled
-    def initialize = (@opened = false; @disabled = false)
-    def open(_client, _ip) = (@opened = true; "camera opened in mpv")
-    def disable(_client) = @disabled = true
+    attr_reader :toggled, :closed
+    attr_accessor :reap_note
+    def initialize = (@toggled = false; @closed = false; @reap_note = nil)
+    def toggle(_client, _ip) = (@toggled = true; "camera opened in mpv")
+    def close(_client) = (@closed = true)
+    def running? = false
+    def reap(_client) = @reap_note
   end
 
   def status_fixture
@@ -45,6 +48,20 @@ class DashboardTest < Minitest::Test
     assert_equal :live, dash.connection
   end
 
+  def test_poll_notices_the_camera_was_closed_externally
+    dash, _client, camera = build
+    camera.reap_note = "camera closed"
+    dash, = dash.handle_poll
+    assert_includes dash.status_note, "closed"
+  end
+
+  def test_poll_leaves_status_note_alone_when_camera_still_running
+    dash, _client, camera = build
+    camera.reap_note = nil
+    dash, = dash.handle_poll
+    assert_equal "", dash.status_note
+  end
+
   def test_poll_marks_reconnecting_on_closed_message
     dash, client, = build
     client.inbox << { type: :closed, payload: {} }
@@ -57,14 +74,14 @@ class DashboardTest < Minitest::Test
     dash, cmd = dash.handle_key("q")
     assert dash.quitting?
     refute_nil cmd
-    assert camera.disabled
+    assert camera.closed, "quit must stop the player so the printer frees the slot"
     assert client.closed
   end
 
-  def test_key_c_opens_camera_and_sets_note
+  def test_key_c_toggles_camera_and_sets_note
     dash, _client, camera = build
     dash, = dash.handle_key("c")
-    assert camera.opened
+    assert camera.toggled
     assert_includes dash.status_note, "camera"
   end
 

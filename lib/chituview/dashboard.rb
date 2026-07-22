@@ -40,6 +40,8 @@ module Chituview
 
     def handle_poll
       drain_inbox
+      note = @camera.reap(@client)
+      @status_note = note if note
       [self, Bubbletea.tick(POLL_INTERVAL) { PollMessage.new }]
     end
 
@@ -47,11 +49,11 @@ module Chituview
       case key
       when "q", "ctrl+c"
         @quitting = true
-        @camera.disable(@client)
+        @camera.close(@client)
         @client.close
         [self, Bubbletea.quit]
       when "c"
-        @status_note = @camera.open(@client, @ip)
+        @status_note = @camera.toggle(@client, @ip)
         [self, nil]
       when "r"
         @connection = :connecting
