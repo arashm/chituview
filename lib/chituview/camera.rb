@@ -9,12 +9,21 @@ module Chituview
     end
 
     def open(client, ip)
-      client.request(Protocol::CMD_CAMERA, { "Enable" => 1 })
+      begin
+        client.request(Protocol::CMD_CAMERA, { "Enable" => 1 })
+      rescue StandardError
+        return "camera unavailable (printer not reachable)"
+      end
+
       player = @players.find { |p| @which.call(p) }
       return "no video player found (install mpv, ffplay, or vlc)" unless player
 
       url = format(VIDEO_URL_TEMPLATE, ip)
-      @spawn.call(player, url)
+      begin
+        @spawn.call(player, url)
+      rescue StandardError
+        return "could not launch #{player}"
+      end
       "camera opened in #{player}"
     end
 
