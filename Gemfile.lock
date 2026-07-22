@@ -1,0 +1,104 @@
+PATH
+  remote: .
+  specs:
+    chituview (0.1.0)
+      bubbles (~> 0.1)
+      bubbletea (~> 0.1)
+      lipgloss (~> 0.2)
+      websocket (>= 1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    bubbles (0.1.1)
+      bubbletea
+      harmonica
+      lipgloss
+    bubbletea (0.1.4)
+      lipgloss (~> 0.1)
+    bubbletea (0.1.4-aarch64-linux-gnu)
+      lipgloss (~> 0.1)
+    bubbletea (0.1.4-aarch64-linux-musl)
+      lipgloss (~> 0.1)
+    bubbletea (0.1.4-arm-linux-gnu)
+      lipgloss (~> 0.1)
+    bubbletea (0.1.4-arm-linux-musl)
+      lipgloss (~> 0.1)
+    bubbletea (0.1.4-arm64-darwin)
+      lipgloss (~> 0.1)
+    bubbletea (0.1.4-x86-linux-gnu)
+      lipgloss (~> 0.1)
+    bubbletea (0.1.4-x86-linux-musl)
+      lipgloss (~> 0.1)
+    bubbletea (0.1.4-x86_64-darwin)
+      lipgloss (~> 0.1)
+    bubbletea (0.1.4-x86_64-linux-gnu)
+      lipgloss (~> 0.1)
+    bubbletea (0.1.4-x86_64-linux-musl)
+      lipgloss (~> 0.1)
+    harmonica (0.1.1)
+    lipgloss (0.2.2)
+    lipgloss (0.2.2-aarch64-linux-gnu)
+    lipgloss (0.2.2-aarch64-linux-musl)
+    lipgloss (0.2.2-arm-linux-gnu)
+    lipgloss (0.2.2-arm-linux-musl)
+    lipgloss (0.2.2-arm64-darwin)
+    lipgloss (0.2.2-x86-linux-gnu)
+    lipgloss (0.2.2-x86-linux-musl)
+    lipgloss (0.2.2-x86_64-darwin)
+    lipgloss (0.2.2-x86_64-linux-gnu)
+    lipgloss (0.2.2-x86_64-linux-musl)
+    minitest (5.27.0)
+    rake (13.4.2)
+    websocket (1.2.11)
+
+PLATFORMS
+  aarch64-linux-gnu
+  aarch64-linux-musl
+  arm-linux-gnu
+  arm-linux-musl
+  arm64-darwin
+  ruby
+  x86-linux-gnu
+  x86-linux-musl
+  x86_64-darwin
+  x86_64-linux-gnu
+  x86_64-linux-musl
+
+DEPENDENCIES
+  chituview!
+  minitest (~> 5.0)
+  rake (~> 13.0)
+
+CHECKSUMS
+  bubbles (0.1.1) sha256=ac16a9adef1cd4d51d7246ea6cda1a745a56321cc21a49e150e7446d62797d05
+  bubbletea (0.1.4) sha256=33c3ea5eb7ab03160b942a9a8062ba04d0af2245a0b6b7457853ac4bd3218f69
+  bubbletea (0.1.4-aarch64-linux-gnu) sha256=9a1200916572dd5518da5d6a66bb136274fa577ecaa67c59dbecd34b872b48fc
+  bubbletea (0.1.4-aarch64-linux-musl) sha256=9e9e1ea40a6e57b4280a7e1e02673831a8f54b8a38f730dcb6597ce35272e176
+  bubbletea (0.1.4-arm-linux-gnu) sha256=6dc9601376848dfe2337685cefc3fc9420d2d7f44c04e74079766006f0dfae6b
+  bubbletea (0.1.4-arm-linux-musl) sha256=954a4ac9a27faa48077394b6c040115106044dbb1d6231089983d83bff306cae
+  bubbletea (0.1.4-arm64-darwin) sha256=112af8ba51b38c4281b648ce43375e9bbe7b666dbb30c8b8d1cd13b4e163e6cb
+  bubbletea (0.1.4-x86-linux-gnu) sha256=91b85eac6806eea2cb4bc774be6ec6f0a666d9009f2b03fd948613a4b915f388
+  bubbletea (0.1.4-x86-linux-musl) sha256=0a79f92bb7ac9cf6ad08bc4399cff6c14d63e01ccf9eb2e0de7b5c7e4a51e774
+  bubbletea (0.1.4-x86_64-darwin) sha256=8b73c14e4a9a8cb14735edf18c71bf568dee2b4340b0f8f572480665cff3d817
+  bubbletea (0.1.4-x86_64-linux-gnu) sha256=c1a06df5828c3af8ed664bf08591eba4bcb16aa44c58f8d21f7e2a01c2dea885
+  bubbletea (0.1.4-x86_64-linux-musl) sha256=b8972ffc21590b83442c1b88d83539c412dea964866560ab1dd263c531fac989
+  chituview (0.1.0)
+  harmonica (0.1.1) sha256=587da9bc55ffb6387c0ffb9243bb3b03d57d1ebaf29a17282d3912a3443f397a
+  lipgloss (0.2.2) sha256=d803bef2ce53aa7b113d032a4e1f8d3f6fb1841532b379c0b2bfff23a3af85e9
+  lipgloss (0.2.2-aarch64-linux-gnu) sha256=cb2e5db7fc14d85ec919223b5d16ad6d7be0ced096fec60e9f6e253d1c8718cd
+  lipgloss (0.2.2-aarch64-linux-musl) sha256=e9c445531db8aa85efceeab73f09530dc53ed8f5b61aa78ab7fe2d6afb179b30
+  lipgloss (0.2.2-arm-linux-gnu) sha256=e3f7424f430dd746f6d00bb587192e54f3fdd90a7fac3447da42b23d432952e8
+  lipgloss (0.2.2-arm-linux-musl) sha256=16f76a7a161d5b7ed083167619760ab658bfc4f2c0bd4eecd518e05ad11c3f46
+  lipgloss (0.2.2-arm64-darwin) sha256=fed911706463ed21d249eace2224cd39323e94f4ab2a55ff6763b358b780d18f
+  lipgloss (0.2.2-x86-linux-gnu) sha256=097344416c54f1290543d2320f3816663c44ccd92912df2ac0cdf15988658e08
+  lipgloss (0.2.2-x86-linux-musl) sha256=50cca3b79d3164894c71070a3cfe6d9d6d6a38d02e8598269543201dd50b0f5a
+  lipgloss (0.2.2-x86_64-darwin) sha256=6f5bab39a31f38995c5fb964ca0a1f84af0102814b4406f8ca96f30da54e112e
+  lipgloss (0.2.2-x86_64-linux-gnu) sha256=99b26dfc4eaa2bf2dfd9823f0894a06ef0b8f7f773db70ae8905d1c5d9d663ad
+  lipgloss (0.2.2-x86_64-linux-musl) sha256=a05ebd4d16a441bbe657fafb269d0f9e6d89a1124b3288264efedc427b007703
+  minitest (5.27.0) sha256=2d3b17f8a36fe7801c1adcffdbc38233b938eb0b4966e97a6739055a45fa77d5
+  rake (13.4.2) sha256=cb825b2bd5f1f8e91ca37bddb4b9aaf345551b4731da62949be002fa89283701
+  websocket (1.2.11) sha256=b7e7a74e2410b5e85c25858b26b3322f29161e300935f70a0e0d3c35e0462737
+
+BUNDLED WITH
+  4.0.16
